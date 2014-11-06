@@ -1,0 +1,34 @@
+__author__ = 'mshep'
+
+from urllib import request
+import pandas as pd
+
+
+url = 'http://www1.ncdc.noaa.gov/pub/data/cdo/samples/PRECIP_HLY_sample_csv.csv'
+
+print("Downloading file")
+response = request.urlopen(url)
+data = response.read()
+data_str = str(data)
+lines = data_str.split("\\n")
+file = open("NOAAData.csv", "w")
+for line in lines:
+    file.write(line + "\n")
+file.close()
+
+read_file = pd.read_csv("NOAAData.csv")
+print(read_file)
+
+
+
+Downloading file
+     b'STATION     STATION_NAME  ELEVATION  LATITUDE  LONGITUDE  0  COOP:310301  ASHEVILLE NC US      682.1   35.5954   -82.5568   
+1  COOP:310301  ASHEVILLE NC US      682.1   35.5954   -82.5568   
+2  COOP:310301  ASHEVILLE NC US      682.1   35.5954   -82.5568   
+3            '              NaN        NaN       NaN        NaN   
+
+             DATE   HPCP Measurement Flag Quality Flag  
+0  20100101 00:00  99999                ]               
+1  20100101 01:00      0                g               
+2  20100102 06:00      1                                
+3             NaN    NaN              NaN          NaN  
